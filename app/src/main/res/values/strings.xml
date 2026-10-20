@@ -49,4 +49,13 @@
     <string name="notif_title_running">Rotator: Active</string>
     <string name="notif_title_paused">Rotator: Paused</string>
     <string name="notif_content_format">Current Mode: %1$s</string>
+
+    <!-- Quick Settings & Boot Settings -->
+    <string name="tile_label">Rotator</string>
+    <string name="tile_subtitle">Screen Rotation</string>
+    <string name="settings_title">Settings &amp; Automation</string>
+    <string name="pref_start_on_boot_title">Start on Device Boot</string>
+    <string name="pref_start_on_boot_desc">Automatically restore rotation enforcement when your phone restarts.</string>
+    <string name="qs_tile_title">Quick Settings Tile Available</string>
+    <string name="qs_tile_desc">Swipe down twice from the top of your screen, tap the edit pencil icon, and drag the Rotator tile into your active Quick Settings for 1-tap orientation control.</string>
 </resources>

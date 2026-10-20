@@ -126,6 +126,12 @@ class MainActivity : AppCompatActivity() {
                 notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+
+        // Start on Boot Preference Switch
+        binding.switchStartOnBoot.isChecked = preferencesManager.startOnBoot
+        binding.switchStartOnBoot.setOnCheckedChangeListener { _, isChecked ->
+            preferencesManager.startOnBoot = isChecked
+        }
     }
 
     private fun handleOrientationSelection(mode: OrientationMode) {

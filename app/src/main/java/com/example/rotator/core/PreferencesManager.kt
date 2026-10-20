@@ -44,6 +44,18 @@ class PreferencesManager(context: Context) {
             prefs.edit().putBoolean(KEY_PANEL_HIDDEN, value).apply()
         }
 
+    var startOnBoot: Boolean
+        get() = prefs.getBoolean(KEY_START_ON_BOOT, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_START_ON_BOOT, value).apply()
+        }
+
+    var wasRunningBeforeShutdown: Boolean
+        get() = prefs.getBoolean(KEY_WAS_RUNNING, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_WAS_RUNNING, value).apply()
+        }
+
     companion object {
         private const val PREFS_NAME = "rotator_preferences"
         private const val KEY_ORIENTATION_MODE = "key_orientation_mode"
@@ -51,5 +63,7 @@ class PreferencesManager(context: Context) {
         private const val KEY_OVERLAY_Y = "key_overlay_y"
         private const val KEY_COMPACT_MODE = "key_compact_mode"
         private const val KEY_PANEL_HIDDEN = "key_panel_hidden"
+        private const val KEY_START_ON_BOOT = "key_start_on_boot"
+        private const val KEY_WAS_RUNNING = "key_was_running"
     }
 }

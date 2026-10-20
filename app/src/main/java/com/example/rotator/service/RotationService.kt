@@ -120,6 +120,7 @@ class RotationService : Service(), OverlayController.Callbacks {
 
     private fun startController(mode: OrientationMode) {
         preferencesManager.lastOrientationMode = mode
+        preferencesManager.wasRunningBeforeShutdown = true
         orientationEnforcer.applyOrientation(mode)
 
         updateState {
@@ -133,6 +134,7 @@ class RotationService : Service(), OverlayController.Callbacks {
             overlayController.show(_controllerState.value)
         }
         updateNotification()
+        RotatorTileService.updateTile(this)
     }
 
     private fun setOrientationMode(mode: OrientationMode) {
@@ -147,6 +149,7 @@ class RotationService : Service(), OverlayController.Callbacks {
 
         overlayController.update(_controllerState.value)
         updateNotification()
+        RotatorTileService.updateTile(this)
     }
 
     private fun pauseController() {
@@ -157,6 +160,7 @@ class RotationService : Service(), OverlayController.Callbacks {
 
         overlayController.update(_controllerState.value)
         updateNotification()
+        RotatorTileService.updateTile(this)
     }
 
     private fun resumeController() {
@@ -169,6 +173,7 @@ class RotationService : Service(), OverlayController.Callbacks {
 
         overlayController.update(_controllerState.value)
         updateNotification()
+        RotatorTileService.updateTile(this)
     }
 
     private fun hideFloatingPanel() {
@@ -194,6 +199,7 @@ class RotationService : Service(), OverlayController.Callbacks {
     }
 
     private fun stopController() {
+        preferencesManager.wasRunningBeforeShutdown = false
         orientationEnforcer.stop()
         overlayController.destroy()
 
@@ -202,6 +208,7 @@ class RotationService : Service(), OverlayController.Callbacks {
         }
 
         stopForeground(STOP_FOREGROUND_REMOVE)
+        RotatorTileService.updateTile(this)
         stopSelf()
     }
 

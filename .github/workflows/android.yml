@@ -1,16 +1,20 @@
-
-name: Android CI Build
+name: Android CI Build & Release
 
 on:
   push:
     branches: [ "main" ]
+    tags:
+      - "v*"
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
-    name: Build Debug APK
+    name: Build & Package APK
     runs-on: ubuntu-latest
 
     steps:
@@ -30,10 +34,41 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug --stacktrace
 
+      - name: Package & Name APK Artifact
+        id: package_apk
+        shell: bash
+        run: |
+          mkdir -p dist
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF_NAME}"
+            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-${VERSION}.apk"
+            echo "apk_path=dist/Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
+            echo "apk_name=Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
+          else
+            SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-debug-${SHORT_SHA}.apk"
+            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-latest-debug.apk"
+            echo "apk_path=dist/Rotator-latest-debug.apk" >> $GITHUB_OUTPUT
+            echo "apk_name=Rotator-latest-debug.apk" >> $GITHUB_OUTPUT
+          fi
+          ls -la dist/
+
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Rotator-Debug-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: Rotator-APK
+          path: dist/*.apk
           if-no-files-found: error
           retention-days: 14
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Rotator ${{ github.ref_name }}"
+          files: dist/*.apk
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

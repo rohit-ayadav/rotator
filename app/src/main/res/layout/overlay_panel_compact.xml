@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/compactRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_compact_panel"
+    android:elevation="12dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="8dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="6dp">
+
+    <ImageView
+        android:id="@+id/ivCompactDragHandle"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="Drag"
+        android:src="@drawable/ic_drag_handle" />
+
+    <ImageView
+        android:id="@+id/ivCompactCurrentMode"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="6dp"
+        android:contentDescription="Current Orientation"
+        android:src="@drawable/ic_portrait"
+        app:tint="@color/secondary" />
+
+    <ImageButton
+        android:id="@+id/btnCompactPauseResume"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="6dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_pause"
+        android:src="@drawable/ic_pause"
+        app:tint="@color/text_primary" />
+
+    <ImageButton
+        android:id="@+id/btnCompactExpand"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_expand"
+        android:src="@drawable/ic_expand"
+        app:tint="@color/text_primary" />
+
+</LinearLayout>

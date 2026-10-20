@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Circular rotation arrows -->
+    <path
+        android:fillColor="#6366F1"
+        android:pathData="M54,20A34,34 0 0,0 24,38L16,30V50H36L28,42A26,26 0 1,1 28,66L20,72A34,34 0 1,0 54,20Z" />
+    <!-- Device rectangle inside -->
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M46,38h16a4,4 0 0,1 4,4v26a4,4 0 0,1 -4,4H46a4,4 0 0,1 -4,-4V42a4,4 0 0,1 4,-4z" />
+</vector>

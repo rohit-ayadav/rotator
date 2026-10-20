@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rotator</string>
+    <string name="app_tagline">Floating Screen Rotation Controller</string>
+    <string name="app_description">Control your device screen orientation from anywhere with an unobtrusive floating panel and ongoing notification controls.</string>
+
+    <!-- State Strings -->
+    <string name="status_label">Service Status</string>
+    <string name="status_stopped">Stopped</string>
+    <string name="status_running">Active &amp; Enforcing</string>
+    <string name="status_paused">Paused</string>
+    <string name="status_panel_hidden">Active (Panel Hidden)</string>
+
+    <!-- Orientation Modes -->
+    <string name="orientation_label">Active Orientation</string>
+    <string name="mode_portrait">Portrait</string>
+    <string name="mode_reverse_portrait">Reverse Portrait</string>
+    <string name="mode_landscape_left">Landscape Left</string>
+    <string name="mode_landscape_right">Landscape Right</string>
+    <string name="mode_auto_rotate">Auto-Rotate</string>
+
+    <!-- Control Actions -->
+    <string name="action_start">Start Controller</string>
+    <string name="action_stop">Stop Controller</string>
+    <string name="action_pause">Pause</string>
+    <string name="action_resume">Resume</string>
+    <string name="action_hide_panel">Hide Panel</string>
+    <string name="action_show_panel">Show Panel</string>
+    <string name="action_compact">Compact Mode</string>
+    <string name="action_expand">Expand Panel</string>
+
+    <!-- Permissions -->
+    <string name="permissions_title">Required Permissions</string>
+    <string name="permission_overlay_title">Display Over Other Apps</string>
+    <string name="permission_overlay_desc">Required to display the floating rotation panel and manage screen orientation across other applications.</string>
+    <string name="permission_overlay_granted">Granted</string>
+    <string name="permission_overlay_denied">Not Granted</string>
+    <string name="btn_grant_overlay">Grant Overlay Permission</string>
+
+    <string name="permission_notif_title">Notifications</string>
+    <string name="permission_notif_desc">Required on Android 13+ to display rotation controls and status in the notification shade.</string>
+    <string name="permission_notif_granted">Granted</string>
+    <string name="permission_notif_denied">Not Granted</string>
+    <string name="btn_grant_notif">Grant Notification Permission</string>
+
+    <!-- Notification -->
+    <string name="notif_channel_name">Rotation Controller</string>
+    <string name="notif_channel_desc">Shows ongoing rotation controls and service status.</string>
+    <string name="notif_title_running">Rotator: Active</string>
+    <string name="notif_title_paused">Rotator: Paused</string>
+    <string name="notif_content_format">Current Mode: %1$s</string>
+</resources>

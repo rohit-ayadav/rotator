@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/panelRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_floating_panel"
+    android:elevation="12dp"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Top Drag Handle & Title Bar -->
+    <LinearLayout
+        android:id="@+id/dragBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:contentDescription="Drag"
+            android:src="@drawable/ic_drag_handle" />
+
+        <TextView
+            android:id="@+id/tvOverlayTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="Rotator"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <!-- Minimize to Compact Mode -->
+        <ImageButton
+            android:id="@+id/btnOverlayCompact"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Minimize"
+            android:src="@drawable/ic_compress"
+            app:tint="@color/text_secondary" />
+
+        <!-- Hide Panel Button -->
+        <ImageButton
+            android:id="@+id/btnOverlayHide"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Hide"
+            android:src="@drawable/ic_visibility_off"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <!-- Five Orientation Buttons Row -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnOverlayPortrait"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_button_circle"
+            android:contentDescription="@string/mode_portrait"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_portrait"
+            app:tint="@color/text_primary" />
+
+        <ImageButton
+            android:id="@+id/btnOverlayReversePortrait"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_button_circle"
+            android:contentDescription="@string/mode_reverse_portrait"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_reverse_portrait"
+            app:tint="@color/text_primary" />
+
+        <ImageButton
+            android:id="@+id/btnOverlayLandscapeLeft"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_button_circle"
+            android:contentDescription="@string/mode_landscape_left"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_landscape_left"
+            app:tint="@color/text_primary" />
+
+        <ImageButton
+            android:id="@+id/btnOverlayLandscapeRight"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_button_circle"
+            android:contentDescription="@string/mode_landscape_right"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_landscape_right"
+            app:tint="@color/text_primary" />
+
+        <ImageButton
+            android:id="@+id/btnOverlayAutoRotate"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/bg_button_circle"
+            android:contentDescription="@string/mode_auto_rotate"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_auto_rotate"
+            app:tint="@color/text_primary" />
+    </LinearLayout>
+
+    <!-- Bottom Actions Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOverlayPauseResume"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/surface_variant"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="@string/action_pause"
+            android:textColor="@color/text_primary"
+            android:textSize="11sp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_pause"
+            app:iconPadding="4dp"
+            app:iconSize="14dp"
+            app:iconTint="@color/text_primary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOverlayStop"
+            style="@style/Widget.Material3.Button.TonalButton"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/danger_container"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:text="@string/action_stop"
+            android:textColor="@color/on_danger_container"
+            android:textSize="11sp"
+            app:cornerRadius="8dp"
+            app:icon="@drawable/ic_stop"
+            app:iconPadding="4dp"
+            app:iconSize="14dp"
+            app:iconTint="@color/on_danger_container" />
+    </LinearLayout>
+
+</LinearLayout>

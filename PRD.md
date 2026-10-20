@@ -1,5 +1,3 @@
-Here is a complete Product Requirements Document (PRD) for your Android Rotation Control app, covering the floating overlay, notification controls, rotation modes, permissions, technical architecture, and acceptance criteria. It is structured so you can use it as a development specification for implementation through GitHub Actions without installing Android Studio on Windows.
-
 # Product Requirements Document (PRD)
 
 ## Rotator — Floating Screen Rotation Controller
@@ -457,7 +455,3 @@ These limitations must be documented and tested rather than presented as univers
 Rotator is a native Android utility combining a floating rotation panel, a persistent notification, and a lightweight controller service. It offers five orientation modes and provides consistent Pause, Resume, Stop, Hide, and Show behaviour while respecting Android permissions and system restrictions.
 
 The first release prioritizes reliable control within supported Android contexts, privacy, low resource consumption, and a simple GitHub Actions-based APK build process.
-
-### Recommended next step
-
-Use this PRD as the specification for implementation. The most important technical decision is to build and test the foreground service, overlay, and notification actions together, since they must share a consistent controller state. The global orientation behaviour should then be validated on your actual Android phone rather than assumed to work across every app.

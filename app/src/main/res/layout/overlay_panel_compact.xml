@@ -34,8 +34,10 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="6dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/bg_button_circle"
         android:contentDescription="@string/action_pause"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_pause"
         app:tint="@color/text_primary" />
 
@@ -44,8 +46,10 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="4dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/bg_button_circle"
         android:contentDescription="@string/action_expand"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_expand"
         app:tint="@color/text_primary" />
 

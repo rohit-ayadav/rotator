@@ -42,8 +42,10 @@
             android:id="@+id/btnOverlayCompact"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_button_circle"
             android:contentDescription="Minimize"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_compress"
             app:tint="@color/text_secondary" />
 
@@ -53,8 +55,10 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="4dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_button_circle"
             android:contentDescription="Hide"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_visibility_off"
             app:tint="@color/text_secondary" />
     </LinearLayout>

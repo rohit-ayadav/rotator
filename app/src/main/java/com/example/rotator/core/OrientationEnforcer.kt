@@ -78,8 +78,8 @@ class OrientationEnforcer(private val context: Context) {
         }
 
         val params = WindowManager.LayoutParams(
-            0,
-            0,
+            1,
+            1,
             windowType,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or

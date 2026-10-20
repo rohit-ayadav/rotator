@@ -27,15 +27,28 @@ object PermissionManager {
     }
 
     /**
-     * Opens the system settings screen for granting overlay permission.
+     * Opens the system settings screen for granting overlay permission with safe fallback.
      */
     fun requestOverlayPermission(activity: Activity, requestCode: Int = 1001) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:${activity.packageName}")
-            )
-            activity.startActivityForResult(intent, requestCode)
+            try {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:${activity.packageName}")
+                )
+                activity.startActivityForResult(intent, requestCode)
+            } catch (e: Exception) {
+                try {
+                    val fallbackIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                    activity.startActivityForResult(fallbackIntent, requestCode)
+                } catch (e2: Exception) {
+                    android.widget.Toast.makeText(
+                        activity,
+                        "Please open device Settings > Apps > Rotator and grant 'Display over other apps'",
+                        android.widget.Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 

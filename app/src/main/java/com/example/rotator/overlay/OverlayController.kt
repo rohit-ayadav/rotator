@@ -112,14 +112,15 @@ class OverlayController(
             y = preferencesManager.overlayY
         }
 
-        val inflater = LayoutInflater.from(context)
-        val view = if (compact) {
-            setupCompactView(inflater, params)
-        } else {
-            setupExpandedView(inflater, params)
-        }
-
         try {
+            val themedContext = androidx.appcompat.view.ContextThemeWrapper(context, R.style.Theme_Rotator)
+            val inflater = LayoutInflater.from(themedContext)
+            val view = if (compact) {
+                setupCompactView(inflater, params)
+            } else {
+                setupExpandedView(inflater, params)
+            }
+
             windowManager.addView(view, params)
             currentView = view
             layoutParams = params
@@ -205,45 +206,53 @@ class OverlayController(
 
     private fun updateExpandedView(state: ControllerState) {
         val view = currentView ?: return
-        val binding = OverlayPanelBinding.bind(view)
+        try {
+            val binding = OverlayPanelBinding.bind(view)
 
-        // Update active orientation highlight
-        val activeBg = ContextCompat.getDrawable(context, R.drawable.bg_button_circle_active)
-        val defaultBg = ContextCompat.getDrawable(context, R.drawable.bg_button_circle)
+            // Update active orientation highlight
+            val activeBg = ContextCompat.getDrawable(context, R.drawable.bg_button_circle_active)
+            val defaultBg = ContextCompat.getDrawable(context, R.drawable.bg_button_circle)
 
-        binding.btnOverlayPortrait.background =
-            if (state.orientationMode == OrientationMode.PORTRAIT) activeBg else defaultBg
-        binding.btnOverlayReversePortrait.background =
-            if (state.orientationMode == OrientationMode.REVERSE_PORTRAIT) activeBg else defaultBg
-        binding.btnOverlayLandscapeLeft.background =
-            if (state.orientationMode == OrientationMode.LANDSCAPE_LEFT) activeBg else defaultBg
-        binding.btnOverlayLandscapeRight.background =
-            if (state.orientationMode == OrientationMode.LANDSCAPE_RIGHT) activeBg else defaultBg
-        binding.btnOverlayAutoRotate.background =
-            if (state.orientationMode == OrientationMode.AUTO_ROTATE) activeBg else defaultBg
+            binding.btnOverlayPortrait.background =
+                if (state.orientationMode == OrientationMode.PORTRAIT) activeBg else defaultBg
+            binding.btnOverlayReversePortrait.background =
+                if (state.orientationMode == OrientationMode.REVERSE_PORTRAIT) activeBg else defaultBg
+            binding.btnOverlayLandscapeLeft.background =
+                if (state.orientationMode == OrientationMode.LANDSCAPE_LEFT) activeBg else defaultBg
+            binding.btnOverlayLandscapeRight.background =
+                if (state.orientationMode == OrientationMode.LANDSCAPE_RIGHT) activeBg else defaultBg
+            binding.btnOverlayAutoRotate.background =
+                if (state.orientationMode == OrientationMode.AUTO_ROTATE) activeBg else defaultBg
 
-        // Update Pause / Resume button
-        if (state.isPaused) {
-            binding.btnOverlayPauseResume.text = context.getString(R.string.action_resume)
-            binding.btnOverlayPauseResume.setIconResource(R.drawable.ic_play)
-            binding.tvOverlayTitle.text = context.getString(R.string.status_paused)
-        } else {
-            binding.btnOverlayPauseResume.text = context.getString(R.string.action_pause)
-            binding.btnOverlayPauseResume.setIconResource(R.drawable.ic_pause)
-            binding.tvOverlayTitle.text = context.getString(R.string.app_name)
+            // Update Pause / Resume button
+            if (state.isPaused) {
+                binding.btnOverlayPauseResume.text = context.getString(R.string.action_resume)
+                binding.btnOverlayPauseResume.setIconResource(R.drawable.ic_play)
+                binding.tvOverlayTitle.text = context.getString(R.string.status_paused)
+            } else {
+                binding.btnOverlayPauseResume.text = context.getString(R.string.action_pause)
+                binding.btnOverlayPauseResume.setIconResource(R.drawable.ic_pause)
+                binding.tvOverlayTitle.text = context.getString(R.string.app_name)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating expanded view: ${e.message}")
         }
     }
 
     private fun updateCompactView(state: ControllerState) {
         val view = currentView ?: return
-        val binding = OverlayPanelCompactBinding.bind(view)
+        try {
+            val binding = OverlayPanelCompactBinding.bind(view)
 
-        binding.ivCompactCurrentMode.setImageResource(state.orientationMode.iconRes)
+            binding.ivCompactCurrentMode.setImageResource(state.orientationMode.iconRes)
 
-        if (state.isPaused) {
-            binding.btnCompactPauseResume.setImageResource(R.drawable.ic_play)
-        } else {
-            binding.btnCompactPauseResume.setImageResource(R.drawable.ic_pause)
+            if (state.isPaused) {
+                binding.btnCompactPauseResume.setImageResource(R.drawable.ic_play)
+            } else {
+                binding.btnCompactPauseResume.setImageResource(R.drawable.ic_pause)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating compact view: ${e.message}")
         }
     }
 

@@ -104,7 +104,7 @@ class RotationService : Service(), OverlayController.Callbacks {
     private fun startAsForegroundService() {
         val notification = notificationHelper.buildNotification(_controllerState.value)
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 startForeground(
                     NotificationHelper.NOTIFICATION_ID,
                     notification,
@@ -114,7 +114,12 @@ class RotationService : Service(), OverlayController.Callbacks {
                 startForeground(NotificationHelper.NOTIFICATION_ID, notification)
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Error starting foreground service", e)
+            Log.e(TAG, "Error starting foreground service with type, falling back", e)
+            try {
+                startForeground(NotificationHelper.NOTIFICATION_ID, notification)
+            } catch (e2: Exception) {
+                Log.e(TAG, "Critical failure in startForeground", e2)
+            }
         }
     }
 

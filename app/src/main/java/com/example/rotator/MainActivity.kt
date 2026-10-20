@@ -63,40 +63,56 @@ class MainActivity : AppCompatActivity() {
     private fun setupListeners() {
         // Start Controller
         binding.btnStartService.setOnClickListener {
-            if (!PermissionManager.hasOverlayPermission(this)) {
-                Toast.makeText(
-                    this,
-                    "Overlay permission is required for the floating controller.",
-                    Toast.LENGTH_LONG
-                ).show()
-                PermissionManager.requestOverlayPermission(this)
-                return@setOnClickListener
+            try {
+                if (!PermissionManager.hasOverlayPermission(this)) {
+                    Toast.makeText(
+                        this,
+                        "Overlay permission is required. Please enable 'Display over other apps'.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    PermissionManager.requestOverlayPermission(this)
+                    return@setOnClickListener
+                }
+                RotationService.startService(this, preferencesManager.lastOrientationMode)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Could not start service: ${e.message}", Toast.LENGTH_LONG).show()
             }
-            RotationService.startService(this, preferencesManager.lastOrientationMode)
         }
 
         // Pause / Resume Toggle
         binding.btnPauseResumeService.setOnClickListener {
-            val currentState = RotationService.controllerState.value
-            if (currentState.isPaused) {
-                RotationService.sendAction(this, RotationService.ACTION_RESUME)
-            } else {
-                RotationService.sendAction(this, RotationService.ACTION_PAUSE)
+            try {
+                val currentState = RotationService.controllerState.value
+                if (currentState.isPaused) {
+                    RotationService.sendAction(this, RotationService.ACTION_RESUME)
+                } else {
+                    RotationService.sendAction(this, RotationService.ACTION_PAUSE)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, "Action failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
         // Stop Controller
         binding.btnStopService.setOnClickListener {
-            RotationService.sendAction(this, RotationService.ACTION_STOP)
+            try {
+                RotationService.sendAction(this, RotationService.ACTION_STOP)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Stop failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Toggle Floating Panel
         binding.btnTogglePanel.setOnClickListener {
-            if (!PermissionManager.hasOverlayPermission(this)) {
-                PermissionManager.requestOverlayPermission(this)
-                return@setOnClickListener
+            try {
+                if (!PermissionManager.hasOverlayPermission(this)) {
+                    PermissionManager.requestOverlayPermission(this)
+                    return@setOnClickListener
+                }
+                RotationService.sendAction(this, RotationService.ACTION_TOGGLE_PANEL)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Toggle failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
-            RotationService.sendAction(this, RotationService.ACTION_TOGGLE_PANEL)
         }
 
         // 5 Orientation Buttons
@@ -135,22 +151,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleOrientationSelection(mode: OrientationMode) {
-        preferencesManager.lastOrientationMode = mode
-        val currentState = RotationService.controllerState.value
+        try {
+            preferencesManager.lastOrientationMode = mode
+            val currentState = RotationService.controllerState.value
 
-        if (currentState.serviceState == ServiceState.STOPPED) {
-            if (!PermissionManager.hasOverlayPermission(this)) {
-                Toast.makeText(
-                    this,
-                    "Overlay permission is required for the floating controller.",
-                    Toast.LENGTH_LONG
-                ).show()
-                PermissionManager.requestOverlayPermission(this)
-                return
+            if (currentState.serviceState == ServiceState.STOPPED) {
+                if (!PermissionManager.hasOverlayPermission(this)) {
+                    Toast.makeText(
+                        this,
+                        "Overlay permission is required. Please enable 'Display over other apps'.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    PermissionManager.requestOverlayPermission(this)
+                    return
+                }
+                RotationService.startService(this, mode)
+            } else {
+                RotationService.sendAction(this, RotationService.ACTION_SET_MODE, mode)
             }
-            RotationService.startService(this, mode)
-        } else {
-            RotationService.sendAction(this, RotationService.ACTION_SET_MODE, mode)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Selection failed: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 

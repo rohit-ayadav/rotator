@@ -31,7 +31,7 @@ class OrientationModeTest {
         assertEquals(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT, OrientationMode.REVERSE_PORTRAIT.activityInfoOrientation)
         assertEquals(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE, OrientationMode.LANDSCAPE_LEFT.activityInfoOrientation)
         assertEquals(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE, OrientationMode.LANDSCAPE_RIGHT.activityInfoOrientation)
-        assertEquals(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED, OrientationMode.AUTO_ROTATE.activityInfoOrientation)
+        assertEquals(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR, OrientationMode.AUTO_ROTATE.activityInfoOrientation)
     }
 
     @Test

@@ -48,11 +48,9 @@ jobs:
             echo "apk_path=dist/Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
             echo "apk_name=Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
           else
-            SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-debug-${SHORT_SHA}.apk"
-            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-latest-debug.apk"
-            echo "apk_path=dist/Rotator-latest-debug.apk" >> $GITHUB_OUTPUT
-            echo "apk_name=Rotator-latest-debug.apk" >> $GITHUB_OUTPUT
+            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-debug.apk"
+            echo "apk_path=dist/Rotator-debug.apk" >> $GITHUB_OUTPUT
+            echo "apk_name=Rotator-debug.apk" >> $GITHUB_OUTPUT
           fi
           ls -la dist/
 

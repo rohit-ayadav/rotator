@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupListeners() {
         // Start Controller
         binding.btnStartService.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             try {
                 if (!PermissionManager.hasOverlayPermission(this)) {
                     Toast.makeText(
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         // Pause / Resume Toggle
         binding.btnPauseResumeService.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             try {
                 val currentState = RotationService.controllerState.value
                 if (currentState.isPaused) {
@@ -95,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         // Stop Controller
         binding.btnStopService.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             try {
                 RotationService.sendAction(this, RotationService.ACTION_STOP)
             } catch (e: Exception) {
@@ -104,6 +107,7 @@ class MainActivity : AppCompatActivity() {
 
         // Toggle Floating Panel
         binding.btnTogglePanel.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             try {
                 if (!PermissionManager.hasOverlayPermission(this)) {
                     PermissionManager.requestOverlayPermission(this)
@@ -117,18 +121,23 @@ class MainActivity : AppCompatActivity() {
 
         // 5 Orientation Buttons
         binding.btnPortrait.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             handleOrientationSelection(OrientationMode.PORTRAIT)
         }
         binding.btnReversePortrait.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             handleOrientationSelection(OrientationMode.REVERSE_PORTRAIT)
         }
         binding.btnLandscapeLeft.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             handleOrientationSelection(OrientationMode.LANDSCAPE_LEFT)
         }
         binding.btnLandscapeRight.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             handleOrientationSelection(OrientationMode.LANDSCAPE_RIGHT)
         }
         binding.btnAutoRotate.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             handleOrientationSelection(OrientationMode.AUTO_ROTATE)
         }
 

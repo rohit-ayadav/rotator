@@ -1,0 +1,33 @@
+name: 💡 Feature Request
+description: Suggest an idea or feature for Rotator
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to improve Rotator? Please explain the problem you are trying to solve and how you envision the solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of the problem or limitation.
+      placeholder: e.g. I am always frustrated when using app X because...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution / Feature
+      description: Describe how you would like this to work.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative workarounds?
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add any mockups, screenshots, or extra context here.

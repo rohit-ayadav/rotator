@@ -39,6 +39,16 @@ enum class OrientationMode(
         R.string.mode_auto_rotate
     );
 
+    fun next(): OrientationMode {
+        return when (this) {
+            PORTRAIT -> LANDSCAPE_LEFT
+            LANDSCAPE_LEFT -> REVERSE_PORTRAIT
+            REVERSE_PORTRAIT -> LANDSCAPE_RIGHT
+            LANDSCAPE_RIGHT -> AUTO_ROTATE
+            AUTO_ROTATE -> PORTRAIT
+        }
+    }
+
     companion object {
         fun fromName(name: String?, default: OrientationMode = PORTRAIT): OrientationMode {
             return entries.firstOrNull { it.name.equals(name, ignoreCase = true) } ?: default

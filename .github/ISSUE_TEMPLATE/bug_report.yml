@@ -1,0 +1,55 @@
+name: 🐛 Bug Report
+description: Create a report to help us reproduce and fix an issue
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an issue! Please check existing issues first to avoid duplicates.
+  - type: input
+    id: device_info
+    attributes:
+      label: Device & OS
+      description: What device and Android version are you experiencing the issue on?
+      placeholder: e.g. Google Pixel 8, Android 15 (API 35) or Samsung Galaxy S23, OneUI 6.1
+    validations:
+      required: true
+  - type: input
+    id: app_version
+    attributes:
+      label: Rotator Version
+      description: What version of Rotator are you running?
+      placeholder: e.g. v1.0.1 or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction_steps
+    attributes:
+      label: Steps to Reproduce
+      description: Exact steps to reproduce the behavior.
+      placeholder: |
+        1. Open Rotator and start controller
+        2. Set orientation to 'Landscape Left'
+        3. Switch to another app...
+    validations:
+      required: true
+  - type: textarea
+    id: expected_vs_actual
+    attributes:
+      label: Expected vs. Actual Behavior
+      description: What did you expect to happen and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logcat / Crash Logs
+      description: Paste any relevant logs or stack traces here.
+      render: shell

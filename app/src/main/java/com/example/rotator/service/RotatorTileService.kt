@@ -53,7 +53,7 @@ class RotatorTileService : TileService() {
             }
         } else {
             // Cycle to the next orientation mode
-            val nextMode = getNextMode(state.orientationMode)
+            val nextMode = state.orientationMode.next()
             RotationService.sendAction(this, RotationService.ACTION_SET_MODE, nextMode)
             if (state.isPaused) {
                 RotationService.sendAction(this, RotationService.ACTION_RESUME)
@@ -97,16 +97,6 @@ class RotatorTileService : TileService() {
         }
 
         tile.updateTile()
-    }
-
-    private fun getNextMode(current: OrientationMode): OrientationMode {
-        return when (current) {
-            OrientationMode.PORTRAIT -> OrientationMode.LANDSCAPE_LEFT
-            OrientationMode.LANDSCAPE_LEFT -> OrientationMode.REVERSE_PORTRAIT
-            OrientationMode.REVERSE_PORTRAIT -> OrientationMode.LANDSCAPE_RIGHT
-            OrientationMode.LANDSCAPE_RIGHT -> OrientationMode.AUTO_ROTATE
-            OrientationMode.AUTO_ROTATE -> OrientationMode.PORTRAIT
-        }
     }
 
     companion object {

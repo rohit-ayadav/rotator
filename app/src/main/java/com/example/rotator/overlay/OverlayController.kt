@@ -144,35 +144,44 @@ class OverlayController(
 
         // Orientation buttons
         binding.btnOverlayPortrait.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.PORTRAIT)
         }
         binding.btnOverlayReversePortrait.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.REVERSE_PORTRAIT)
         }
         binding.btnOverlayLandscapeLeft.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.LANDSCAPE_LEFT)
         }
         binding.btnOverlayLandscapeRight.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.LANDSCAPE_RIGHT)
         }
         binding.btnOverlayAutoRotate.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.AUTO_ROTATE)
         }
 
         // Actions
         binding.btnOverlayPauseResume.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onPauseResumeToggle()
         }
         binding.btnOverlayCompact.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             isCompact = true
             preferencesManager.isCompactMode = true
             createAndAttachOverlay(compact = true)
             update(lastState)
         }
         binding.btnOverlayHide.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onHidePanel()
         }
         binding.btnOverlayStop.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onStopRequested()
         }
 
@@ -186,15 +195,22 @@ class OverlayController(
     ): View {
         val binding = OverlayPanelCompactBinding.inflate(inflater)
 
-        // Entire compact pill is draggable via drag handle or background
-        val dragListener = DragTouchListener(windowManager, params, preferencesManager)
+        // Entire compact pill is draggable and magnetically snaps to nearest screen edge
+        val dragListener = DragTouchListener(
+            windowManager,
+            params,
+            preferencesManager,
+            enableEdgeSnapping = true
+        )
         binding.ivCompactDragHandle.setOnTouchListener(dragListener)
         binding.compactRoot.setOnTouchListener(dragListener)
 
         binding.btnCompactPauseResume.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onPauseResumeToggle()
         }
         binding.btnCompactExpand.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             isCompact = false
             preferencesManager.isCompactMode = false
             createAndAttachOverlay(compact = false)

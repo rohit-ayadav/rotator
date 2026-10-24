@@ -110,5 +110,13 @@ cd rotator
 
 ---
 
+## 🤝 Contributing
+Contributions are always welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on setting up your development environment, coding standards, and submitting pull requests. All participants must abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+For release notes and version history, refer to [CHANGELOG.md](CHANGELOG.md).
+
+---
+
 ## 📄 License
-This project is open-source under the Apache 2.0 License.
+This project is open-source under the [Apache 2.0 License](LICENSE).
+

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Rotator Product Requirements Document (PRD)
+    url: https://github.com/rohit-ayadav/rotator/blob/main/PRD.md
+    about: Read the official product requirements, architecture, and feature definitions.

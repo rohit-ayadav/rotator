@@ -1,4 +1,4 @@
-# Rotator 🔄
+# Rotator
 
 [![Android CI Build & Release](https://github.com/rohit-ayadav/rotator/actions/workflows/android.yml/badge.svg)](https://github.com/rohit-ayadav/rotator/actions/workflows/android.yml)
 ![Platform](https://img.shields.io/badge/Platform-Android%206.0%2B%20(API%2023--35)-brightgreen.svg)
@@ -18,10 +18,13 @@
   - 🖥️ **Landscape Left**: Standard landscape mode.
   - 🔄 **Landscape Right**: Inverted landscape mode.
   - 🧭 **Auto-Rotate**: Unlocks rotation to sensor-based system behavior.
-- **Floating Overlay Controller**:
-  - Draggable anywhere on the screen with boundary-safe clamping.
+- **Floating Overlay Controller & Customization**:
+  - Draggable anywhere on the screen with modern `WindowMetrics` boundary-safe clamping.
+  - **Magnetic Edge Snapping**: Automatically docks the compact pill against the nearest screen border.
   - **Full Mode**: Quick access to all 5 orientation modes, Pause/Resume, Hide, and Stop.
   - **Compact Pill Mode**: Minimized floating icon showing active orientation and a 1-tap pause toggle.
+  - **Transparency / Opacity Control**: Adjustable overlay opacity (20% to 100%) with live preview.
+  - **Idle Auto-Collapse**: Automatically minimizes to the compact pill after inactivity (3s, 5s, or 10s).
 - **Quick Settings Tile**:
   - Pull down from your notification shade to view active orientation and 1-tap cycle through modes without opening the app.
 - **Ongoing Notification Controls**:

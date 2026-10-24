@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unit test suite (`testDebugUnitTest`) covering `OrientationMode`, `ControllerState`, and `RotatorTileService`.
 - Magnetic edge snapping and modern `WindowMetrics` boundary clamping for the floating overlay.
 - Haptic feedback when interacting with overlay buttons and mode cycling.
+- Overlay Customization suite:
+  - Configurable transparency / opacity slider (20% to 100%) with live real-time preview.
+  - Idle auto-collapse timer (automatically minimizes full panel to compact pill after 3s, 5s, or 10s of inactivity).
+  - Magnetic edge docking toggle for the compact pill.
 - CI pipeline quality checks running unit tests and lint.
 
 ---

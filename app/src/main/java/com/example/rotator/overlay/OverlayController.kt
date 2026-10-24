@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -44,6 +46,16 @@ class OverlayController(
     var isPanelVisible: Boolean = false
         private set
 
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val autoCollapseRunnable = Runnable {
+        if (isPanelVisible && !isCompact) {
+            isCompact = true
+            preferencesManager.isCompactMode = true
+            createAndAttachOverlay(compact = true)
+            update(lastState)
+        }
+    }
+
     /**
      * Displays the floating panel if not already visible.
      */
@@ -55,12 +67,14 @@ class OverlayController(
         }
         createAndAttachOverlay(isCompact)
         update(state)
+        resetAutoCollapseTimer()
     }
 
     /**
      * Hides the floating panel without affecting orientation enforcement.
      */
     fun hide() {
+        mainHandler.removeCallbacks(autoCollapseRunnable)
         removeCurrentOverlay()
         isPanelVisible = false
     }
@@ -77,14 +91,39 @@ class OverlayController(
         } else {
             updateExpandedView(state)
         }
+        resetAutoCollapseTimer()
+    }
+
+    /**
+     * Applies dynamic customizations such as opacity and idle timer.
+     */
+    fun applyCustomizations() {
+        val params = layoutParams ?: return
+        val view = currentView ?: return
+        params.alpha = preferencesManager.overlayAlpha
+        try {
+            windowManager.updateViewLayout(view, params)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to update overlay customizations: ${e.message}")
+        }
+        resetAutoCollapseTimer()
     }
 
     /**
      * Removes all views and cleans up resources.
      */
     fun destroy() {
+        mainHandler.removeCallbacks(autoCollapseRunnable)
         removeCurrentOverlay()
         isPanelVisible = false
+    }
+
+    private fun resetAutoCollapseTimer() {
+        mainHandler.removeCallbacks(autoCollapseRunnable)
+        if (isPanelVisible && !isCompact && preferencesManager.autoCollapseIdle) {
+            val delayMs = preferencesManager.autoCollapseTimeoutSeconds * 1000L
+            mainHandler.postDelayed(autoCollapseRunnable, delayMs)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -110,6 +149,7 @@ class OverlayController(
             gravity = Gravity.TOP or Gravity.START
             x = preferencesManager.overlayX
             y = preferencesManager.overlayY
+            alpha = preferencesManager.overlayAlpha
         }
 
         try {
@@ -144,28 +184,34 @@ class OverlayController(
 
         // Orientation buttons
         binding.btnOverlayPortrait.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.PORTRAIT)
         }
         binding.btnOverlayReversePortrait.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.REVERSE_PORTRAIT)
         }
         binding.btnOverlayLandscapeLeft.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.LANDSCAPE_LEFT)
         }
         binding.btnOverlayLandscapeRight.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.LANDSCAPE_RIGHT)
         }
         binding.btnOverlayAutoRotate.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onOrientationSelected(OrientationMode.AUTO_ROTATE)
         }
 
         // Actions
         binding.btnOverlayPauseResume.setOnClickListener {
+            resetAutoCollapseTimer()
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             callbacks.onPauseResumeToggle()
         }
@@ -200,7 +246,7 @@ class OverlayController(
             windowManager,
             params,
             preferencesManager,
-            enableEdgeSnapping = true
+            enableEdgeSnapping = preferencesManager.snapToEdge
         )
         binding.ivCompactDragHandle.setOnTouchListener(dragListener)
         binding.compactRoot.setOnTouchListener(dragListener)

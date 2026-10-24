@@ -58,4 +58,17 @@
     <string name="pref_start_on_boot_desc">Automatically restore rotation enforcement when your phone restarts.</string>
     <string name="qs_tile_title">Quick Settings Tile Available</string>
     <string name="qs_tile_desc">Swipe down twice from the top of your screen, tap the edit pencil icon, and drag the Rotator tile into your active Quick Settings for 1-tap orientation control.</string>
+
+    <!-- Overlay Customization -->
+    <string name="overlay_customization_title">Overlay Customization</string>
+    <string name="pref_opacity_title">Overlay Opacity</string>
+    <string name="pref_opacity_desc">Adjust transparency to prevent blocking underlying content.</string>
+    <string name="pref_opacity_format">%1$d%%</string>
+    <string name="pref_auto_collapse_title">Auto-Collapse to Pill</string>
+    <string name="pref_auto_collapse_desc">Automatically minimize full panel into compact edge pill after inactivity.</string>
+    <string name="pref_snap_edge_title">Snap Pill to Screen Edge</string>
+    <string name="pref_snap_edge_desc">Magnetically dock the compact pill against the nearest screen border.</string>
+    <string name="timeout_3s">3s</string>
+    <string name="timeout_5s">5s</string>
+    <string name="timeout_10s">10s</string>
 </resources>

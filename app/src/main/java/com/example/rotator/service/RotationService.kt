@@ -92,6 +92,10 @@ class RotationService : Service(), OverlayController.Callbacks {
                 }
             }
 
+            ACTION_UPDATE_OVERLAY_PREFS -> {
+                overlayController.applyCustomizations()
+            }
+
             ACTION_STOP -> {
                 stopController()
                 return START_NOT_STICKY
@@ -279,6 +283,7 @@ class RotationService : Service(), OverlayController.Callbacks {
         const val ACTION_HIDE_PANEL = "com.example.rotator.action.HIDE_PANEL"
         const val ACTION_SHOW_PANEL = "com.example.rotator.action.SHOW_PANEL"
         const val ACTION_TOGGLE_PANEL = "com.example.rotator.action.TOGGLE_PANEL"
+        const val ACTION_UPDATE_OVERLAY_PREFS = "com.example.rotator.action.UPDATE_OVERLAY_PREFS"
 
         const val EXTRA_MODE_NAME = "extra_mode_name"
 
@@ -310,6 +315,12 @@ class RotationService : Service(), OverlayController.Callbacks {
                 context.startForegroundService(intent)
             } else {
                 context.startService(intent)
+            }
+        }
+
+        fun updateOverlayPreferences(context: Context) {
+            if (_controllerState.value.serviceState != ServiceState.STOPPED) {
+                sendAction(context, ACTION_UPDATE_OVERLAY_PREFS)
             }
         }
     }

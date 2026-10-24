@@ -157,6 +157,55 @@ class MainActivity : AppCompatActivity() {
         binding.switchStartOnBoot.setOnCheckedChangeListener { _, isChecked ->
             preferencesManager.startOnBoot = isChecked
         }
+
+        // Overlay Opacity Slider
+        val currentOpacity = preferencesManager.overlayOpacity
+        binding.sliderOverlayOpacity.value = currentOpacity.toFloat()
+        binding.tvOpacityValue.text = getString(R.string.pref_opacity_format, currentOpacity)
+
+        binding.sliderOverlayOpacity.addOnChangeListener { _, value, fromUser ->
+            val opacity = value.toInt()
+            binding.tvOpacityValue.text = getString(R.string.pref_opacity_format, opacity)
+            if (fromUser) {
+                preferencesManager.overlayOpacity = opacity
+                RotationService.updateOverlayPreferences(this)
+            }
+        }
+
+        // Auto Collapse Switch & Timeout
+        val isAutoCollapse = preferencesManager.autoCollapseIdle
+        binding.switchAutoCollapse.isChecked = isAutoCollapse
+        binding.layoutCollapseTimeout.visibility = if (isAutoCollapse) View.VISIBLE else View.GONE
+
+        binding.switchAutoCollapse.setOnCheckedChangeListener { _, isChecked ->
+            preferencesManager.autoCollapseIdle = isChecked
+            binding.layoutCollapseTimeout.visibility = if (isChecked) View.VISIBLE else View.GONE
+            RotationService.updateOverlayPreferences(this)
+        }
+
+        // Timeout Chips
+        when (preferencesManager.autoCollapseTimeoutSeconds) {
+            3 -> binding.chipTimeout3s.isChecked = true
+            10 -> binding.chipTimeout10s.isChecked = true
+            else -> binding.chipTimeout5s.isChecked = true
+        }
+
+        binding.chipGroupTimeout.setOnCheckedStateChangeListener { _, checkedIds ->
+            val timeoutSec = when {
+                checkedIds.contains(R.id.chipTimeout3s) -> 3
+                checkedIds.contains(R.id.chipTimeout10s) -> 10
+                else -> 5
+            }
+            preferencesManager.autoCollapseTimeoutSeconds = timeoutSec
+            RotationService.updateOverlayPreferences(this)
+        }
+
+        // Snap to Screen Edge Switch
+        binding.switchSnapToEdge.isChecked = preferencesManager.snapToEdge
+        binding.switchSnapToEdge.setOnCheckedChangeListener { _, isChecked ->
+            preferencesManager.snapToEdge = isChecked
+            RotationService.updateOverlayPreferences(this)
+        }
     }
 
     private fun handleOrientationSelection(mode: OrientationMode) {

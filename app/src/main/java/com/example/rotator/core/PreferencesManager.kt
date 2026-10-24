@@ -56,6 +56,33 @@ class PreferencesManager(context: Context) {
             prefs.edit().putBoolean(KEY_WAS_RUNNING, value).apply()
         }
 
+    var overlayOpacity: Int
+        get() = prefs.getInt(KEY_OVERLAY_OPACITY, 90).coerceIn(20, 100)
+        set(value) {
+            prefs.edit().putInt(KEY_OVERLAY_OPACITY, value.coerceIn(20, 100)).apply()
+        }
+
+    val overlayAlpha: Float
+        get() = overlayOpacity / 100f
+
+    var autoCollapseIdle: Boolean
+        get() = prefs.getBoolean(KEY_AUTO_COLLAPSE_IDLE, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_AUTO_COLLAPSE_IDLE, value).apply()
+        }
+
+    var autoCollapseTimeoutSeconds: Int
+        get() = prefs.getInt(KEY_AUTO_COLLAPSE_TIMEOUT, 5).coerceIn(3, 30)
+        set(value) {
+            prefs.edit().putInt(KEY_AUTO_COLLAPSE_TIMEOUT, value.coerceIn(3, 30)).apply()
+        }
+
+    var snapToEdge: Boolean
+        get() = prefs.getBoolean(KEY_SNAP_TO_EDGE, true)
+        set(value) {
+            prefs.edit().putBoolean(KEY_SNAP_TO_EDGE, value).apply()
+        }
+
     companion object {
         private const val PREFS_NAME = "rotator_preferences"
         private const val KEY_ORIENTATION_MODE = "key_orientation_mode"
@@ -65,5 +92,9 @@ class PreferencesManager(context: Context) {
         private const val KEY_PANEL_HIDDEN = "key_panel_hidden"
         private const val KEY_START_ON_BOOT = "key_start_on_boot"
         private const val KEY_WAS_RUNNING = "key_was_running"
+        private const val KEY_OVERLAY_OPACITY = "key_overlay_opacity"
+        private const val KEY_AUTO_COLLAPSE_IDLE = "key_auto_collapse_idle"
+        private const val KEY_AUTO_COLLAPSE_TIMEOUT = "key_auto_collapse_timeout"
+        private const val KEY_SNAP_TO_EDGE = "key_snap_to_edge"
     }
 }

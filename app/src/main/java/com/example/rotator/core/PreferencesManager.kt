@@ -67,7 +67,7 @@ class PreferencesManager(private val prefs: SharedPreferences) {
         get() = overlayOpacity / 100f
 
     var autoCollapseIdle: Boolean
-        get() = prefs.getBoolean(KEY_AUTO_COLLAPSE_IDLE, false)
+        get() = prefs.getBoolean(KEY_AUTO_COLLAPSE_IDLE, true)
         set(value) {
             prefs.edit().putBoolean(KEY_AUTO_COLLAPSE_IDLE, value).apply()
         }

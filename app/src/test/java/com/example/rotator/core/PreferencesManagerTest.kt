@@ -66,7 +66,7 @@ class PreferencesManagerTest {
         val prefs = PreferencesManager(mockPrefs)
         assertEquals(90, prefs.overlayOpacity)
         assertEquals(0.90f, prefs.overlayAlpha, 0.001f)
-        assertFalse(prefs.autoCollapseIdle)
+        assertTrue(prefs.autoCollapseIdle)
         assertEquals(5, prefs.autoCollapseTimeoutSeconds)
         assertTrue(prefs.snapToEdge)
     }

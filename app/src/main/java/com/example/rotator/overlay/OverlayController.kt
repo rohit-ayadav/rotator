@@ -2,6 +2,7 @@ package com.example.rotator.overlay
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Handler
@@ -241,21 +242,17 @@ class OverlayController(
     ): View {
         val binding = OverlayPanelCompactBinding.inflate(inflater)
 
-        // Entire compact pill is draggable and magnetically snaps to nearest screen edge
+        // Entire compact bubble is draggable and magnetically snaps to nearest screen edge
         val dragListener = DragTouchListener(
             windowManager,
             params,
             preferencesManager,
             enableEdgeSnapping = preferencesManager.snapToEdge
         )
-        binding.ivCompactDragHandle.setOnTouchListener(dragListener)
         binding.compactRoot.setOnTouchListener(dragListener)
 
-        binding.btnCompactPauseResume.setOnClickListener {
-            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
-            callbacks.onPauseResumeToggle()
-        }
-        binding.btnCompactExpand.setOnClickListener {
+        // Clicking the compact bubble expands the big panel
+        binding.compactRoot.setOnClickListener {
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             isCompact = false
             preferencesManager.isCompactMode = false
@@ -309,9 +306,11 @@ class OverlayController(
             binding.ivCompactCurrentMode.setImageResource(state.orientationMode.iconRes)
 
             if (state.isPaused) {
-                binding.btnCompactPauseResume.setImageResource(R.drawable.ic_play)
+                binding.ivCompactCurrentMode.imageTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.warning))
             } else {
-                binding.btnCompactPauseResume.setImageResource(R.drawable.ic_pause)
+                binding.ivCompactCurrentMode.imageTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(context, R.color.text_primary))
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error updating compact view: ${e.message}")

@@ -20,8 +20,8 @@
     <string name="mode_auto_rotate">Auto-Rotate</string>
 
     <!-- Control Actions -->
-    <string name="action_start">Start Controller</string>
-    <string name="action_stop">Stop Controller</string>
+    <string name="action_start">Start</string>
+    <string name="action_stop">Stop</string>
     <string name="action_pause">Pause</string>
     <string name="action_resume">Resume</string>
     <string name="action_hide_panel">Hide Panel</string>

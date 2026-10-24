@@ -1,6 +1,5 @@
 package com.example.rotator.core
 
-import android.content.Context
 import android.content.SharedPreferences
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -12,7 +11,7 @@ import java.lang.reflect.Proxy
 class PreferencesManagerTest {
 
     private val inMemoryPrefs = HashMap<String, Any>()
-    private lateinit var mockContext: Context
+    private lateinit var mockPrefs: SharedPreferences
 
     @Before
     fun setUp() {
@@ -21,31 +20,18 @@ class PreferencesManagerTest {
         val sharedPreferencesHandler = java.lang.reflect.InvocationHandler { _, method, args ->
             when (method.name) {
                 "getString" -> inMemoryPrefs[args[0] as String] as? String ?: args[1]
-                "getInt" -> inMemoryPrefs[args[0] as String] as? Int ?: args[1]
-                "getBoolean" -> inMemoryPrefs[args[0] as String] as? Boolean ?: args[1]
+                "getInt" -> (inMemoryPrefs[args[0] as String] as? Number)?.toInt() ?: (args[1] as Int)
+                "getBoolean" -> inMemoryPrefs[args[0] as String] as? Boolean ?: (args[1] as Boolean)
                 "edit" -> createEditorProxy()
                 else -> null
             }
         }
 
-        val sharedPrefsProxy = Proxy.newProxyInstance(
+        mockPrefs = Proxy.newProxyInstance(
             SharedPreferences::class.java.classLoader,
             arrayOf(SharedPreferences::class.java),
             sharedPreferencesHandler
         ) as SharedPreferences
-
-        val contextHandler = java.lang.reflect.InvocationHandler { _, method, args ->
-            when (method.name) {
-                "getSharedPreferences" -> sharedPrefsProxy
-                else -> null
-            }
-        }
-
-        mockContext = Proxy.newProxyInstance(
-            Context::class.java.classLoader,
-            arrayOf(Context::class.java),
-            contextHandler
-        ) as Context
     }
 
     private fun createEditorProxy(): SharedPreferences.Editor {
@@ -56,7 +42,7 @@ class PreferencesManagerTest {
                     proxy
                 }
                 "putInt" -> {
-                    inMemoryPrefs[args[0] as String] = args[1]
+                    inMemoryPrefs[args[0] as String] = (args[1] as Number).toInt()
                     proxy
                 }
                 "putBoolean" -> {
@@ -77,7 +63,7 @@ class PreferencesManagerTest {
 
     @Test
     fun testDefaultOverlayCustomizations() {
-        val prefs = PreferencesManager(mockContext)
+        val prefs = PreferencesManager(mockPrefs)
         assertEquals(90, prefs.overlayOpacity)
         assertEquals(0.90f, prefs.overlayAlpha, 0.001f)
         assertFalse(prefs.autoCollapseIdle)
@@ -87,7 +73,7 @@ class PreferencesManagerTest {
 
     @Test
     fun testOpacityCoercion() {
-        val prefs = PreferencesManager(mockContext)
+        val prefs = PreferencesManager(mockPrefs)
         prefs.overlayOpacity = 150
         assertEquals(100, prefs.overlayOpacity)
         assertEquals(1.0f, prefs.overlayAlpha, 0.001f)
@@ -103,7 +89,7 @@ class PreferencesManagerTest {
 
     @Test
     fun testAutoCollapseTimeoutCoercion() {
-        val prefs = PreferencesManager(mockContext)
+        val prefs = PreferencesManager(mockPrefs)
         prefs.autoCollapseTimeoutSeconds = 1
         assertEquals(3, prefs.autoCollapseTimeoutSeconds)
 
@@ -116,7 +102,7 @@ class PreferencesManagerTest {
 
     @Test
     fun testToggleSnapToEdge() {
-        val prefs = PreferencesManager(mockContext)
+        val prefs = PreferencesManager(mockPrefs)
         assertTrue(prefs.snapToEdge)
 
         prefs.snapToEdge = false

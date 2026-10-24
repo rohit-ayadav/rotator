@@ -6,10 +6,11 @@ import android.content.SharedPreferences
 /**
  * Manages lightweight persistent preferences such as overlay coordinates and last used mode.
  */
-class PreferencesManager(context: Context) {
+class PreferencesManager(private val prefs: SharedPreferences) {
 
-    private val prefs: SharedPreferences =
+    constructor(context: Context) : this(
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    )
 
     var lastOrientationMode: OrientationMode
         get() {

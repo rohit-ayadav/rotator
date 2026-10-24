@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.rotator"
+        applicationId = "io.github.rohit_ayadav.rotator"
         minSdk = 23
         targetSdk = 35
         versionCode = 2
@@ -17,9 +17,19 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("release.p12")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "rotator_release_key"
+            keyAlias = System.getenv("KEY_ALIAS") ?: "rotator"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "rotator_release_key"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

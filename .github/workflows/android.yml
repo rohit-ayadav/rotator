@@ -32,10 +32,10 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest --stacktrace
+        run: ./gradlew test --stacktrace
 
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Build Release APK with Gradle
+        run: ./gradlew assembleRelease --stacktrace
 
       - name: Package & Name APK Artifact
         id: package_apk
@@ -44,17 +44,17 @@ jobs:
           mkdir -p dist
           if [[ "${{ github.ref }}" == refs/tags/* ]]; then
             VERSION="${GITHUB_REF_NAME}"
-            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-${VERSION}.apk"
+            cp app/build/outputs/apk/release/app-release.apk "dist/Rotator-${VERSION}.apk"
             echo "apk_path=dist/Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
             echo "apk_name=Rotator-${VERSION}.apk" >> $GITHUB_OUTPUT
           else
-            cp app/build/outputs/apk/debug/app-debug.apk "dist/Rotator-debug.apk"
-            echo "apk_path=dist/Rotator-debug.apk" >> $GITHUB_OUTPUT
-            echo "apk_name=Rotator-debug.apk" >> $GITHUB_OUTPUT
+            cp app/build/outputs/apk/release/app-release.apk "dist/Rotator-release.apk"
+            echo "apk_path=dist/Rotator-release.apk" >> $GITHUB_OUTPUT
+            echo "apk_name=Rotator-release.apk" >> $GITHUB_OUTPUT
           fi
           ls -la dist/
 
-      - name: Upload Debug APK Artifact
+      - name: Upload Release APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Rotator-APK

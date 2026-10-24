@@ -275,15 +275,15 @@ class RotationService : Service(), OverlayController.Callbacks {
     companion object {
         private const val TAG = "RotationService"
 
-        const val ACTION_START = "com.example.rotator.action.START"
-        const val ACTION_STOP = "com.example.rotator.action.STOP"
-        const val ACTION_PAUSE = "com.example.rotator.action.PAUSE"
-        const val ACTION_RESUME = "com.example.rotator.action.RESUME"
-        const val ACTION_SET_MODE = "com.example.rotator.action.SET_MODE"
-        const val ACTION_HIDE_PANEL = "com.example.rotator.action.HIDE_PANEL"
-        const val ACTION_SHOW_PANEL = "com.example.rotator.action.SHOW_PANEL"
-        const val ACTION_TOGGLE_PANEL = "com.example.rotator.action.TOGGLE_PANEL"
-        const val ACTION_UPDATE_OVERLAY_PREFS = "com.example.rotator.action.UPDATE_OVERLAY_PREFS"
+        const val ACTION_START = "io.github.rohit_ayadav.rotator.action.START"
+        const val ACTION_STOP = "io.github.rohit_ayadav.rotator.action.STOP"
+        const val ACTION_PAUSE = "io.github.rohit_ayadav.rotator.action.PAUSE"
+        const val ACTION_RESUME = "io.github.rohit_ayadav.rotator.action.RESUME"
+        const val ACTION_SET_MODE = "io.github.rohit_ayadav.rotator.action.SET_MODE"
+        const val ACTION_HIDE_PANEL = "io.github.rohit_ayadav.rotator.action.HIDE_PANEL"
+        const val ACTION_SHOW_PANEL = "io.github.rohit_ayadav.rotator.action.SHOW_PANEL"
+        const val ACTION_TOGGLE_PANEL = "io.github.rohit_ayadav.rotator.action.TOGGLE_PANEL"
+        const val ACTION_UPDATE_OVERLAY_PREFS = "io.github.rohit_ayadav.rotator.action.UPDATE_OVERLAY_PREFS"
 
         const val EXTRA_MODE_NAME = "extra_mode_name"
 

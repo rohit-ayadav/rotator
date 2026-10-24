@@ -71,4 +71,15 @@
     <string name="timeout_3s">3s</string>
     <string name="timeout_5s">5s</string>
     <string name="timeout_10s">10s</string>
+
+    <!-- Help & Guide -->
+    <string name="help_title">How to Use Rotator</string>
+    <string name="help_dialog_message">Rotator gives you complete, uninterrupted control over your screen orientation across all apps.\n\n🔄 &lt;b&gt;5 Orientation Modes:&lt;/b&gt;\n• &lt;b&gt;Portrait:&lt;/b&gt; Standard upright orientation.\n• &lt;b&gt;Reverse Portrait:&lt;/b&gt; Upside-down mode (ideal when charging or reading in bed).\n• &lt;b&gt;Landscape Left:&lt;/b&gt; Standard landscape.\n• &lt;b&gt;Landscape Right:&lt;/b&gt; Inverted landscape.\n• &lt;b&gt;Auto-Rotate:&lt;/b&gt; Unlocks sensor-based rotation.\n\n✨ &lt;b&gt;Floating Overlay:&lt;/b&gt;\n• Drag the top bar to move the panel anywhere.\n• Tap the minimize icon to switch to &lt;b&gt;Compact Pill Mode&lt;/b&gt;.\n• Pill magnetically snaps to screen edges.\n\n📱 &lt;b&gt;Quick Settings Tile:&lt;/b&gt;\n• Pull down your notification shade and add the Rotator tile for 1-tap mode cycling.\n\n🔒 &lt;b&gt;Privacy:&lt;/b&gt; 100% offline, zero internet access, no tracking.</string>
+    <string name="help_dialog_close">Got It</string>
+
+    <!-- Permission Rationale Dialog -->
+    <string name="permission_rationale_title">Permission Required</string>
+    <string name="permission_rationale_message">To control screen orientation across other applications and display the draggable floating controller, Rotator requires the &lt;b&gt;Display over other apps&lt;/b&gt; permission.\n\n🔒 &lt;b&gt;Why is this safe?&lt;/b&gt;\n• Rotator has &lt;b&gt;no internet permission&lt;/b&gt; and collects zero data.\n• Used exclusively to display controls and apply your requested screen orientation.\n• You can revoke this permission anytime in your system Settings.</string>
+    <string name="btn_grant_now">Grant Permission</string>
+    <string name="btn_maybe_later">Maybe Later</string>
 </resources>

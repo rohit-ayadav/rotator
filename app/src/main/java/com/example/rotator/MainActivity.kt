@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -20,6 +21,7 @@ import com.example.rotator.core.ServiceState
 import com.example.rotator.databinding.ActivityMainBinding
 import com.example.rotator.service.RotationService
 import com.example.rotator.util.PermissionManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
 /**
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         setupListeners()
         observeControllerState()
+        checkFirstTimePermissionRationale()
     }
 
     override fun onResume() {
@@ -61,22 +64,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Start Controller
-        binding.btnStartService.setOnClickListener {
+        // Start / Stop Toggle Controller
+        binding.btnStartStopService.setOnClickListener {
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             try {
-                if (!PermissionManager.hasOverlayPermission(this)) {
-                    Toast.makeText(
-                        this,
-                        "Overlay permission is required. Please enable 'Display over other apps'.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    PermissionManager.requestOverlayPermission(this)
-                    return@setOnClickListener
+                val currentState = RotationService.controllerState.value
+                if (currentState.serviceState == ServiceState.STOPPED) {
+                    if (!PermissionManager.hasOverlayPermission(this)) {
+                        showOverlayPermissionRationaleDialog()
+                        return@setOnClickListener
+                    }
+                    RotationService.startService(this, preferencesManager.lastOrientationMode)
+                } else {
+                    RotationService.sendAction(this, RotationService.ACTION_STOP)
                 }
-                RotationService.startService(this, preferencesManager.lastOrientationMode)
             } catch (e: Exception) {
-                Toast.makeText(this, "Could not start service: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Action failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -92,16 +95,6 @@ class MainActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, "Action failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Stop Controller
-        binding.btnStopService.setOnClickListener {
-            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
-            try {
-                RotationService.sendAction(this, RotationService.ACTION_STOP)
-            } catch (e: Exception) {
-                Toast.makeText(this, "Stop failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -143,7 +136,13 @@ class MainActivity : AppCompatActivity() {
 
         // Permission Grant Buttons
         binding.btnGrantOverlay.setOnClickListener {
-            PermissionManager.requestOverlayPermission(this)
+            showOverlayPermissionRationaleDialog()
+        }
+
+        // Help Information FAB
+        binding.fabHelp.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
+            showHelpDialog()
         }
 
         binding.btnGrantNotif.setOnClickListener {
@@ -215,12 +214,7 @@ class MainActivity : AppCompatActivity() {
 
             if (currentState.serviceState == ServiceState.STOPPED) {
                 if (!PermissionManager.hasOverlayPermission(this)) {
-                    Toast.makeText(
-                        this,
-                        "Overlay permission is required. Please enable 'Display over other apps'.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    PermissionManager.requestOverlayPermission(this)
+                    showOverlayPermissionRationaleDialog()
                     return
                 }
                 RotationService.startService(this, mode)
@@ -248,9 +242,19 @@ class MainActivity : AppCompatActivity() {
             ServiceState.STOPPED -> {
                 binding.tvStatusBadge.text = getString(R.string.status_stopped)
                 binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.text_tertiary))
-                binding.btnStartService.isEnabled = true
+
+                binding.btnStartStopService.isEnabled = true
+                binding.btnStartStopService.text = getString(R.string.action_start)
+                binding.btnStartStopService.setIconResource(R.drawable.ic_play)
+                binding.btnStartStopService.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary))
+                binding.btnStartStopService.setTextColor(ContextCompat.getColor(this, R.color.white))
+                binding.btnStartStopService.iconTint =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white))
+
                 binding.btnPauseResumeService.isEnabled = false
-                binding.btnStopService.isEnabled = false
+                binding.btnPauseResumeService.text = getString(R.string.action_pause)
+                binding.btnPauseResumeService.setIconResource(R.drawable.ic_pause)
                 binding.btnTogglePanel.isEnabled = false
             }
 
@@ -261,9 +265,17 @@ class MainActivity : AppCompatActivity() {
                     binding.tvStatusBadge.text = getString(R.string.status_running)
                 }
                 binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.success))
-                binding.btnStartService.isEnabled = false
+
+                binding.btnStartStopService.isEnabled = true
+                binding.btnStartStopService.text = getString(R.string.action_stop)
+                binding.btnStartStopService.setIconResource(R.drawable.ic_stop)
+                binding.btnStartStopService.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.danger_container))
+                binding.btnStartStopService.setTextColor(ContextCompat.getColor(this, R.color.on_danger_container))
+                binding.btnStartStopService.iconTint =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.on_danger_container))
+
                 binding.btnPauseResumeService.isEnabled = true
-                binding.btnStopService.isEnabled = true
                 binding.btnTogglePanel.isEnabled = true
                 binding.btnPauseResumeService.text = getString(R.string.action_pause)
                 binding.btnPauseResumeService.setIconResource(R.drawable.ic_pause)
@@ -272,9 +284,17 @@ class MainActivity : AppCompatActivity() {
             ServiceState.PAUSED -> {
                 binding.tvStatusBadge.text = getString(R.string.status_paused)
                 binding.tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.warning))
-                binding.btnStartService.isEnabled = false
+
+                binding.btnStartStopService.isEnabled = true
+                binding.btnStartStopService.text = getString(R.string.action_stop)
+                binding.btnStartStopService.setIconResource(R.drawable.ic_stop)
+                binding.btnStartStopService.backgroundTintList =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.danger_container))
+                binding.btnStartStopService.setTextColor(ContextCompat.getColor(this, R.color.on_danger_container))
+                binding.btnStartStopService.iconTint =
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.on_danger_container))
+
                 binding.btnPauseResumeService.isEnabled = true
-                binding.btnStopService.isEnabled = true
                 binding.btnTogglePanel.isEnabled = true
                 binding.btnPauseResumeService.text = getString(R.string.action_resume)
                 binding.btnPauseResumeService.setIconResource(R.drawable.ic_play)
@@ -342,5 +362,46 @@ class MainActivity : AppCompatActivity() {
                 ColorStateList.valueOf(ContextCompat.getColor(this, R.color.success))
             binding.btnGrantNotif.visibility = View.GONE
         }
+    }
+
+    private fun checkFirstTimePermissionRationale() {
+        if (!PermissionManager.hasOverlayPermission(this) && !preferencesManager.hasSeenPermissionRationale) {
+            binding.root.post {
+                showOverlayPermissionRationaleDialog()
+            }
+        }
+    }
+
+    private fun showOverlayPermissionRationaleDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.permission_rationale_title)
+            .setMessage(
+                HtmlCompat.fromHtml(
+                    getString(R.string.permission_rationale_message),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            )
+            .setPositiveButton(R.string.btn_grant_now) { _, _ ->
+                preferencesManager.hasSeenPermissionRationale = true
+                PermissionManager.requestOverlayPermission(this)
+            }
+            .setNegativeButton(R.string.btn_maybe_later) { dialog, _ ->
+                preferencesManager.hasSeenPermissionRationale = true
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun showHelpDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.help_title)
+            .setMessage(
+                HtmlCompat.fromHtml(
+                    getString(R.string.help_dialog_message),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            )
+            .setPositiveButton(R.string.help_dialog_close, null)
+            .show()
     }
 }

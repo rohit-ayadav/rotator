@@ -84,6 +84,12 @@ class PreferencesManager(private val prefs: SharedPreferences) {
             prefs.edit().putBoolean(KEY_SNAP_TO_EDGE, value).apply()
         }
 
+    var hasSeenPermissionRationale: Boolean
+        get() = prefs.getBoolean(KEY_HAS_SEEN_RATIONALE, false)
+        set(value) {
+            prefs.edit().putBoolean(KEY_HAS_SEEN_RATIONALE, value).apply()
+        }
+
     companion object {
         private const val PREFS_NAME = "rotator_preferences"
         private const val KEY_ORIENTATION_MODE = "key_orientation_mode"
@@ -97,5 +103,6 @@ class PreferencesManager(private val prefs: SharedPreferences) {
         private const val KEY_AUTO_COLLAPSE_IDLE = "key_auto_collapse_idle"
         private const val KEY_AUTO_COLLAPSE_TIMEOUT = "key_auto_collapse_timeout"
         private const val KEY_SNAP_TO_EDGE = "key_snap_to_edge"
+        private const val KEY_HAS_SEEN_RATIONALE = "key_has_seen_rationale"
     }
 }

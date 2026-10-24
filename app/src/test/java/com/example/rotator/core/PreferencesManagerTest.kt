@@ -108,4 +108,13 @@ class PreferencesManagerTest {
         prefs.snapToEdge = false
         assertFalse(prefs.snapToEdge)
     }
+
+    @Test
+    fun testHasSeenPermissionRationale() {
+        val prefs = PreferencesManager(mockPrefs)
+        assertFalse(prefs.hasSeenPermissionRationale)
+
+        prefs.hasSeenPermissionRationale = true
+        assertTrue(prefs.hasSeenPermissionRationale)
+    }
 }

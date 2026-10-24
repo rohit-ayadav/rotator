@@ -7,20 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [1.0.2] - 2026-10-24
 
 ### Added
-- Apache 2.0 `LICENSE` file.
-- Open-source governance files: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `CHANGELOG.md`.
-- GitHub Issue Forms (Bug Report, Feature Request) and Pull Request template.
-- Unit test suite (`testDebugUnitTest`) covering `OrientationMode`, `ControllerState`, and `RotatorTileService`.
-- Magnetic edge snapping and modern `WindowMetrics` boundary clamping for the floating overlay.
-- Haptic feedback when interacting with overlay buttons and mode cycling.
-- Overlay Customization suite:
-  - Configurable transparency / opacity slider (20% to 100%) with live real-time preview.
-  - Idle auto-collapse timer (automatically minimizes full panel to compact pill after 3s, 5s, or 10s of inactivity).
-  - Magnetic edge docking toggle for the compact pill.
-- CI pipeline quality checks running unit tests and lint.
+- **Minimalist Floating Bubble:** Streamlined compact mode to a single 44dp circular floating bubble displaying only the active orientation icon with magnetic edge snapping and 1-tap expansion.
+- **Auto-Collapse Inactivity Timer:** Full floating panel automatically minimizes back into the floating bubble after 5 seconds of inactivity.
+- **Permission Onboarding Rationale:** First-time onboarding dialog explaining why the "Display over other apps" overlay permission is required and safe before navigating to system settings.
+- **In-App Help Guide:** Detailed explanation dialog accessible via bottom-right floating action button.
+- **GitHub Repository Integration:** Dedicated GitHub button in app header and link in Help guide.
+- **Crystal-Clear Orientation Icons:** Added high-contrast directional indicators (`↑`, `↓`, `←`, `→`, dual-arc sensor) for instant recognition.
+- **Premium Adaptive Launcher Icon:** Multi-stop linear gradient background (`#1E1B4B` to `#080C14`), 3D glass smartphone frame, and dual-arc rotation arrows.
+- **Material You Dynamic Theming:** Android 13+ monochrome icon (`ic_launcher_monochrome`) that adapts to wallpaper palette.
+- **Matching Header Logo:** High-definition circular vector badge for in-app header.
+- **Release Keystore & R8 Minification:** Configured official release keystore and ProGuard/R8 bytecode minification, eliminating AV false positives (Evo-gen).
+- **Official Package ID:** Changed application ID to `io.github.rohit_ayadav.rotator`.
+- **Open-Source Governance:** Added Apache 2.0 `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and issue templates.
+
+### Changed
+- Unified separate Start and Stop buttons into a single adaptive 52dp toggle button matching the Pause button height.
+- Fixed orientation buttons viewport overflow so mode buttons are never cropped on narrow mobile screens.
+- Streamlined dashboard by removing redundant Privacy and System Integrity card.
 
 ---
 

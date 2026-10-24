@@ -4,11 +4,16 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
+    <!-- Phone outline -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M17,1.01L7,1C5.9,1 5,1.9 5,3v18c0,1.1 0.9,2 2,2h10c1.1,0 2,-0.9 2,-2V3C19,1.9 18.1,1.01 17,1.01zM17,19H7V5h10V19z" />
-    <!-- Speaker at bottom to represent upside down -->
+        android:pathData="M16,1H8C6.9,1 6,1.9 6,3v18c0,1.1 0.9,2 2,2h8c1.1,0 2,-0.9 2,-2V3C18,1.9 17.1,1 16,1zM16.5,19.5h-9v-15h9V19.5z" />
+    <!-- Speaker notch at bottom (inverted) -->
     <path
         android:fillColor="#FFFFFFFF"
-        android:pathData="M10,20h4v1.5h-4z" />
+        android:pathData="M10.5,20.5h3v1h-3z" />
+    <!-- Downward orientation arrow inside screen -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12,16.5l3.5,-4h-2.5V8h-2v4.5H8.5z" />
 </vector>

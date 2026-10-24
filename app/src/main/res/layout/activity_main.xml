@@ -59,6 +59,16 @@
                         android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
                 </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnGithub"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_button_circle"
+                    android:contentDescription="@string/github_repo"
+                    android:src="@drawable/ic_github"
+                    app:tint="@color/text_primary" />
             </LinearLayout>
 
             <!-- Status Card -->

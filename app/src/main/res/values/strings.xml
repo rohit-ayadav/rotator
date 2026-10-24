@@ -82,4 +82,8 @@
     <string name="permission_rationale_message">To control screen orientation across other applications and display the draggable floating controller, Rotator requires the &lt;b&gt;Display over other apps&lt;/b&gt; permission.\n\n🔒 &lt;b&gt;Why is this safe?&lt;/b&gt;\n• Rotator has &lt;b&gt;no internet permission&lt;/b&gt; and collects zero data.\n• Used exclusively to display controls and apply your requested screen orientation.\n• You can revoke this permission anytime in your system Settings.</string>
     <string name="btn_grant_now">Grant Permission</string>
     <string name="btn_maybe_later">Maybe Later</string>
+
+    <!-- GitHub Repository -->
+    <string name="github_repo">GitHub Repository</string>
+    <string name="action_github">GitHub (Source Code)</string>
 </resources>

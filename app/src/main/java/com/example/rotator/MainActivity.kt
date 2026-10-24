@@ -3,6 +3,7 @@ package com.example.rotator
 import android.Manifest
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -143,6 +144,12 @@ class MainActivity : AppCompatActivity() {
         binding.fabHelp.setOnClickListener {
             it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
             showHelpDialog()
+        }
+
+        // GitHub Repository Header Button
+        binding.btnGithub.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
+            openGitHubRepository()
         }
 
         binding.btnGrantNotif.setOnClickListener {
@@ -402,6 +409,18 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             .setPositiveButton(R.string.help_dialog_close, null)
+            .setNeutralButton(R.string.action_github) { _, _ ->
+                openGitHubRepository()
+            }
             .show()
+    }
+
+    private fun openGitHubRepository() {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/rohit-ayadav/rotator"))
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Could not open browser: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }
